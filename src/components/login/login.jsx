@@ -4,7 +4,9 @@ import Header from "../header/header";
 
 const Login = ({ authService }) => {
   const onLogin = (event) => {
-    console.debug(event);
+    authService
+      .login(event.currentTarget.textContent)
+      .then(console.log("로그인 됨?????"));
   };
   return (
     <section>
