@@ -21,6 +21,19 @@ class AuthService {
          * firebase.js에서 firebase.initializeApp(firebaseConfig);의 인터페이스를 보면 firebase api에서 제공하는 것과 동일한 인터페이스임
          */
     }
+
+    // 사용자의 로그인 상태가 변경될 때마다 호출
+    onAuthChange(onUserChanged) {
+        firebase.auth().onAuthStateChanged(user => {
+            console.debug('aaaaaa', user);
+            onUserChanged(user);
+        });
+    }
+
+    // logout 처리
+    logout() {
+        firebase.auth().signOut();
+      }
 }
 
 export default AuthService;

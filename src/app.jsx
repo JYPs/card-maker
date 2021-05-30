@@ -8,17 +8,16 @@ function App({ authService }) {
   console.debug("key :: ", process.env.REACT_APP_FIREBASE_API_KEY);
   return (
     <div className={styles.app}>
-      {/* <BrowserRouter>
+      <BrowserRouter>
         <Switch>
           <Route exact path="/">
             <Login authService={authService} />
           </Route>
           <Route path="/maker">
-            <Maker />
+            <Maker authService={authService} />
           </Route>
         </Switch>
-      </BrowserRouter> */}
-      <Login authService={authService} />
+      </BrowserRouter>
     </div>
   );
 }
