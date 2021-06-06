@@ -14,7 +14,6 @@ const CardAddForm = ({ FileInput, onAdd }) => {
   const [file, setFile] = useState({ fileName: null, fileURL: null });
 
   const onFileChange = (file) => {
-    console.log("addForm filechange :: ", file);
     setFile({
       fileName: file.name,
       fileURL: file.url,
@@ -32,7 +31,7 @@ const CardAddForm = ({ FileInput, onAdd }) => {
       email: emailRef.current.value || "",
       message: messageRef.current.value || "",
       fileName: file.fileName || "",
-      fileURL: file.url || "",
+      fileURL: file.fileURL || "",
     };
     formRef.current.reset();
     setFile({ fileName: null, fileURL: null });
