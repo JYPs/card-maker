@@ -4,12 +4,18 @@ import './index.module.css';
 import App from './app';
 import '@fortawesome/fontawesome-free/js/all.js';
 import AuthService from './service/auth_service';
+import ImageUploader from './service/image_uploader';
+import ImageFileInput from './components/image_file_input/image_file_input';
 
 const authService = new AuthService();
+const imageUploader = new ImageUploader();
+// FileInput은 컴포넌트 자체를 prop으로 전달.
+// --> 장점 : 쓸뎅ㅄ이 많은 서비스를 전달하지 않아도 된다, FileInput이 조금더 많은 서비스가 필요로 한다면 index에서만 추가 수정이 가능하다
+const FileInput = props => (<ImageFileInput {...props} imageUploader={imageUploader} />);
+
 ReactDOM.render(
-  // React.StrictMode = 자바스크립트의 'use strict' 와 동일, 엄격!!!!!!!, 배포시에는 활성화 되지 않아서 console에 오류가 안나옴~
   <React.StrictMode>
-    <App authService={authService}/>
+    <App authService={authService} FileInput={FileInput}/>
   </React.StrictMode>,
   document.getElementById('root')
 );
