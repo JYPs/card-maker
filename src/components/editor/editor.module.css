@@ -4,6 +4,7 @@
   /* background-color: wheat; */
   border-right: 1px solid makerLightGrey;
   padding: 0.5em 2em;
+  overflow-y: auto; /* 전체 height는 100%로 채우고 preview와 maker는 스크롤링 되게 만듬*/
 }
 
 .title {

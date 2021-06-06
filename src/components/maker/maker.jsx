@@ -6,7 +6,7 @@ import Header from "../header/header";
 import Preview from "../preview/preview";
 import styles from "./maker.module.css";
 
-const Maker = ({ FileInput, authService }) => {
+const Maker = ({ FileInput, authService, cardRepository }) => {
   /* useState에서 기본 값을 배열에 담아서 셋팅함
   const [cards, setCards] = useState([
     {
@@ -44,52 +44,66 @@ const Maker = ({ FileInput, authService }) => {
     },
   ]);
   */
-  //  기본 값을 배열이 아닌 Object에 담아서 셋팅함, key 값은 id 값으로 셋팅
+  //  기본 값을 배열이 아닌 Object에 담아서 셋팅함, key 값은 id 값으로 셋팅 --> fireBase이용하게 되면 디폴트 값 필요가 없어짐
   const [cards, setCards] = useState({
-    1: {
-      id: "1",
-      name: "jyp",
-      company: "Samsung",
-      theme: "dark",
-      title: "Software Engineer",
-      email: "jyp@gmail.com",
-      message: "go for it",
-      fileName: "blank____!!",
-      fileURL: null,
-    },
-    2: {
-      id: "2",
-      name: "jyp22",
-      company: "Samsung22",
-      theme: "light",
-      title: "Software Engineer22",
-      email: "jyp@gmail.com22",
-      message: "go for it22",
-      fileName: "blank____!!22",
-      fileURL: "ellie.png",
-    },
-    3: {
-      id: "3",
-      name: "jyp33",
-      company: "Samsung33",
-      theme: "colorful",
-      title: "Software Engineer33",
-      email: "jyp@gmail.com33",
-      message: "go for it33",
-      fileName: "blank____!!33",
-      fileURL: null,
-    },
+    // 1: {
+    //   id: "1",
+    //   name: "jyp",
+    //   company: "Samsung",
+    //   theme: "dark",
+    //   title: "Software Engineer",
+    //   email: "jyp@gmail.com",
+    //   message: "go for it",
+    //   fileName: "blank____!!",
+    //   fileURL: null,
+    // },
+    // 2: {
+    //   id: "2",
+    //   name: "jyp22",
+    //   company: "Samsung22",
+    //   theme: "light",
+    //   title: "Software Engineer22",
+    //   email: "jyp@gmail.com22",
+    //   message: "go for it22",
+    //   fileName: "blank____!!22",
+    //   fileURL: "ellie.png",
+    // },
+    // 3: {
+    //   id: "3",
+    //   name: "jyp33",
+    //   company: "Samsung33",
+    //   theme: "colorful",
+    //   title: "Software Engineer33",
+    //   email: "jyp@gmail.com33",
+    //   message: "go for it33",
+    //   fileName: "blank____!!33",
+    //   fileURL: null,
+    // },
   });
   const history = useHistory();
+  const historyState = history?.location?.state;
+  const [userId, setUserId] = useState(historyState && historyState.id);
 
   const onLogout = () => {
     authService.logout();
   };
 
   useEffect(() => {
+    if (!userId) {
+      return;
+    }
+    const stopSync = cardRepository.syncCards(userId, (cards) => {
+      setCards(cards);
+    });
+    return () => stopSync();
+  }, [userId]);
+  useEffect(() => {
     authService //
       .onAuthChange((user) => {
-        if (!user) {
+        if (user) {
+          setUserId(user.uid);
+          // history.push("/");
+        } else {
           history.push("/");
         }
       });
@@ -131,6 +145,7 @@ const Maker = ({ FileInput, authService }) => {
       updated[card.id] = card;
       return updated;
     });
+    cardRepository.saveCard(userId, card);
   };
   const deleteCard = (card) => {
     // console.debug("deleteCard :::: ", card);
@@ -139,6 +154,7 @@ const Maker = ({ FileInput, authService }) => {
       delete updated[card.id]; // delete ??? 이게 뭐지 이런게 된다고????ㅋㅋㅋㅋ
       return updated;
     });
+    cardRepository.removeCard(userId, card);
   };
   return (
     <section className={styles.maker}>

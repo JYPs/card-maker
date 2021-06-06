@@ -3,6 +3,7 @@
 .preview {
   flex-basis: 50%;
   /* background-color: aqua; */
+  overflow-y: auto; /* 전체 height는 100%로 채우고 preview와 maker는 스크롤링 되게 만듬*/
 }
 
 .title {
