@@ -96,7 +96,7 @@ const Maker = ({ FileInput, authService, cardRepository }) => {
       setCards(cards);
     });
     return () => stopSync();
-  }, [userId]);
+  }, [userId, cardRepository]); // cardRepository를 props로 받아서 쓰는데 cardRepository를 여기에 넣어주지 않으면 repository가 변경되었을때 정상적으로 작동 안할 수 있다
   useEffect(() => {
     authService //
       .onAuthChange((user) => {
@@ -107,7 +107,7 @@ const Maker = ({ FileInput, authService, cardRepository }) => {
           history.push("/");
         }
       });
-  });
+  }, [authService, history]);
 
   // cards를 Object로 변경함에 따라 updateCard()로 통합 시킴
   /* const addCard = (card) => {
