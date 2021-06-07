@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import Editor from "../editor/editor";
 import Footer from "../footer/footer";
@@ -84,9 +84,11 @@ const Maker = ({ FileInput, authService, cardRepository }) => {
   const historyState = history?.location?.state;
   const [userId, setUserId] = useState(historyState && historyState.id);
 
-  const onLogout = () => {
+  // 함수 컴포넌트에서 함수가 계속 호출이 되어도 동일한 데이터를 사용하기 위해서 useCallback()사용 --> 한번 만들어진 함수를 계속 재사용 한다는 의미
+  // useCallback을 사용할때 주의점 : useCallback 내부에서 사용하는 props에 대한 디펜던시를 꼭 걸어줘야 한다
+  const onLogout = useCallback(() => {
     authService.logout();
-  };
+  }, [authService]);
 
   useEffect(() => {
     if (!userId) {

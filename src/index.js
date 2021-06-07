@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import ReactDOM from 'react-dom';
 import './index.module.css';
 import App from './app';
@@ -12,7 +12,7 @@ const authService = new AuthService();
 const imageUploader = new ImageUploader();
 // FileInput은 컴포넌트 자체를 prop으로 전달.
 // --> 장점 : 쓸뎅ㅄ이 많은 서비스를 전달하지 않아도 된다, FileInput이 조금더 많은 서비스가 필요로 한다면 index에서만 추가 수정이 가능하다
-const FileInput = props => (<ImageFileInput {...props} imageUploader={imageUploader} />);
+const FileInput = memo(props => (<ImageFileInput {...props} imageUploader={imageUploader} />));
 
 const cardRepository = new CardRepository();
 

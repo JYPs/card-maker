@@ -1,9 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { memo, useRef, useState } from "react";
 import Button from "../button/button";
 // import ImageFileInput from "../image_file_input/image_file_input"; --> index에서 FileInput 컴포넌트 자체를 prop으로 넘겨오는 방식으로 변경
 import styles from "./card_add_form.module.css";
 
-const CardAddForm = ({ FileInput, onAdd }) => {
+const CardAddForm = memo(({ FileInput, onAdd }) => {
   const formRef = useRef();
   const nameRef = useRef();
   const companyRef = useRef();
@@ -89,6 +89,6 @@ const CardAddForm = ({ FileInput, onAdd }) => {
       <Button name="Add" onClick={onSubmit} />
     </form>
   );
-};
+});
 
 export default CardAddForm;
