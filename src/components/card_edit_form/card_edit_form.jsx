@@ -16,6 +16,15 @@ const CardEditForm = ({ FileInput, card, updateCard, deleteCard }) => {
 
   const onChange = (param) => {
     // parma vs event 차이점이 무엇인지 정확히 알고 넘어가야함.!!!! - 2021 06 02 질문을 남겨둠
+    /**
+     *  브라우저 101 강의에서 이벤트 버블링편을 꼭 확인하자
+     * 
+     * 답변
+     
+        target은 이벤트가 발생한 대상 요소 (버튼을 클릭했다면 버튼이 되겠죠?)
+
+        currentTarget은 현재 이벤트를 처리하는 이벤트 리스너가 등록된 요소예요 
+     */
     console.debug(
       "onChange event",
       param.currentTarget.value,
